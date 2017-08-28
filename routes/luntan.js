@@ -22,20 +22,33 @@ router.get("/",function(req,res){
 })
 // 赞修改
 router.post('/luntanNum',function(req,res){
-    var uid=req.body["uid"];
+    var id=req.body["id"];
     var num=req.body["num"];
-    console.log(uid,num)
 
     res.header("Access-Control-Allow-Origin", "*");
 
-    pool.query(`update luntan set num='${num}' where uid='${uid}'`, function(err, rows, fields) {
+    pool.query(`update luntan set num='${num}' where id='${id}'`, function(err, rows, fields) {
 
         if (err) throw err;
-        var a={aa:"修改成功"}
+        var a={aa:"修改成功"};
         res.send(a)
     });
 });
 // 赞修改完
+
+//添加评论
+router.get('/addpinglun',function (req,res) {
+    res.header("Access-Control-Allow-Origin", "*");  //获取数据时使用
+    var id=req.body["id"];
+    var con=req.body["num"];
+    // 插入
+    pool.query('insert into luntan (con,id) values("aa",7)',function (err,rows,fields) {
+        if(err) throw err;
+        res.send(rows)
+    })
+});
+//添加评论完
+
 
 
 module.exports=router;
