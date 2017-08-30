@@ -12,6 +12,9 @@ var luntan=require('./routes/luntan');
 // 管家页通知
 var tongzhi=require('./routes/tongzhi');
 
+//boss 登录
+var bossLogin=require('./routes/bossLogin');
+
 var app = express();
 
 // view engine setup
@@ -30,8 +33,13 @@ app.use('/', index);
 app.use('/users', users);
 // 业主
 app.use('/luntan',luntan);
+
 //管家页通知
 app.use('/tongzhi',tongzhi);
+
+//boss 登录首页
+app.use('/bossLogin',bossLogin);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -50,6 +58,10 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+//boss端接口
+
 
 
 //创建端口号为8005
