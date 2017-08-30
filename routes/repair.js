@@ -11,9 +11,10 @@ var pool=mysql.createPool({
 });
 router.get("/",function(req,res){
     res.header("Access-Control-Allow-Origin", "*");
-    pool.query(`SELECT * from tongzhi`, function(err, rows, fields) {
+    pool.query(`SELECT * from ye_repair`, function(err, rows, fields) {
         if (err) throw err;
+        console.log(rows);
         res.send(rows)
     });
-})
+});
 module.exports=router;
