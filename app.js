@@ -9,6 +9,8 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 // 业主
 var luntan=require('./routes/luntan');
+// 管家页通知
+var tongzhi=require('./routes/tongzhi');
 
 var app = express();
 
@@ -28,6 +30,8 @@ app.use('/', index);
 app.use('/users', users);
 // 业主
 app.use('/luntan',luntan);
+//管家页通知
+app.use('/tongzhi',tongzhi);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

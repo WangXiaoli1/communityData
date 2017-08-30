@@ -12,9 +12,9 @@ var pool=mysql.createPool({
     database:'community',
     port:3306
 });
-router.get("/",function(req,res){
+router.get("/aa",function(req,res){
     res.header("Access-Control-Allow-Origin", "*");
-    pool.query(`SELECT * from tongzhi`, function(err, rows, fields) {
+    pool.query(`SELECT * from tongzhi`, function(err, rows) {
         if (err) throw err;
         res.send(rows)
     });
