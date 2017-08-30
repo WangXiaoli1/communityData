@@ -9,11 +9,26 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 // 业主
 var luntan=require('./routes/luntan');
+
+//房屋租赁
+var chuzu=require('./routes/chuzu');
+//物业报修
+var repair=require('./routes/repair');
+//物业组织活动
+var activity=require('./routes/activity');
+
 // 管家页通知
 var tongzhi=require('./routes/tongzhi');
 
+
 //boss 登录
 var bossLogin=require('./routes/bossLogin');
+
+//邮包
+var youbao=require('./routes/youbao');
+
+//所有住户
+var zhuhu=require('./routes/zhuhu');
 
 var app = express();
 
@@ -34,11 +49,26 @@ app.use('/users', users);
 // 业主
 app.use('/luntan',luntan);
 
+//业主房屋租赁
+app.use('/chuzu',chuzu);
+//物业报修
+app.use('/repair',repair);
+//物业组织活动
+app.use('/activity',activity);
+
+
 //管家页通知
 app.use('/tongzhi',tongzhi);
 
+
 //boss 登录首页
 app.use('/bossLogin',bossLogin);
+
+//邮包
+app.use('/youbao',youbao);
+
+//住户
+app.use('/zhuhu',zhuhu);
 
 
 // catch 404 and forward to error handler

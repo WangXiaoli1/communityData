@@ -1,3 +1,6 @@
+/**
+ * Created by Administrator on 2017/8/30.
+ */
 var express = require('express');
 var mysql=require('mysql');
 var router=express.Router();
@@ -9,9 +12,9 @@ var pool=mysql.createPool({
     database:'community',
     port:3306
 });
-router.get("/aa",function(req,res){
+router.get("/youbao",function(req,res){
     res.header("Access-Control-Allow-Origin", "*");
-    pool.query(`SELECT * from tongzhi`, function(err, rows) {
+    pool.query(`SELECT * from youbao`, function(err, rows) {
         if (err) throw err;
         res.send(rows)
     });
