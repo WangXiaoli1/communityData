@@ -17,19 +17,50 @@ router.get("/",function(req,res){
     res.header("Access-Control-Allow-Origin", "*");
     pool.query(`SELECT * from luntan`, function(err, rows, fields) {
         if (err) throw err;
-        res.send(rows)
+        let Row=[]
+        pool.query(`SELECT * from pinglun`, function(err2, rows2, fields) {
+            if (err) throw err;
+            Row = rows.map((v,i) => {
+                v.arrs=[];
+                rows2.map((v2) => {
+                    v['id'] == v2['uid'] && (
+                        v.arrs.push(v2)
+                    )
+
+
+                })
+                return v
+            })
+            console.log(Row);
+        })
+        setTimeout(()=>{
+            res.send(Row)
+
+        },1000)
+
+
     });
 })
 // select substring(id,7,8) into 新表 from 原始表
 // SELECT LEFT(项目编号及名称,9)
-//首页部分论坛调取数据　SELECT * FROM TABLENAME LIMIT N
+
+// select 　top　1　*　from　table　order　by　datefield　desc
+// 按时间倒序排，取出最后一条记录就是最近的
+
+
+
+
+//首页部分论坛调取数据,按最近时间排序 　SELECT * FROM TABLENAME LIMIT N
 router.get("/part",function(req,res){
     res.header("Access-Control-Allow-Origin", "*");
-    pool.query(`SELECT * from luntan limit 3`, function(err, rows, fields) {
+    pool.query(`SELECT * from luntan ORDER BY time DESC limit 2`, function(err, rows, fields) {
         if (err) throw err;
+        console.log(rows)
         res.send(rows)
     });
 })
+
+
 // 赞修改
 router.post('/luntanNum',function(req,res){
     var id=req.body["id"];
@@ -60,7 +91,8 @@ router.post('/addpinglun',function (req,res) {
 });
 //添加评论完
 
-// 我的心情说说
+
+// 我的心情说说    //有问题
 router.post("/mymood",function(req,res){
     res.header("Access-Control-Allow-Origin", "*");
     pool.query(`SELECT * from luntan`, function(err, rows, fields) {
@@ -68,6 +100,14 @@ router.post("/mymood",function(req,res){
         res.send(rows)
     });
 })
+// router.post("/mymood",function(req,res){
+//     var name='八戒';
+//     res.header("Access-Control-Allow-Origin", "*");
+//     pool.query(`SELECT * from luntan where name=${name}`, function(err, rows, fields) {
+//         if (err) throw err;
+//         res.send(rows)
+//     });
+// })
 // 我的心情说说完
 
 
