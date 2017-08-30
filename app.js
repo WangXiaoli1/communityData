@@ -15,6 +15,9 @@ var tongzhi=require('./routes/tongzhi');
 //boss 登录
 var bossLogin=require('./routes/bossLogin');
 
+//邮包
+var youbao=require('./routes/youbao');
+
 var app = express();
 
 // view engine setup
@@ -39,6 +42,9 @@ app.use('/tongzhi',tongzhi);
 
 //boss 登录首页
 app.use('/bossLogin',bossLogin);
+
+
+app.use('/youbao',youbao);
 
 
 // catch 404 and forward to error handler
