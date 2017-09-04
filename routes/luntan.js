@@ -13,11 +13,33 @@ var pool=mysql.createPool({
     port:3306
 });
 // 查
+// router.get("/",function(req,res){
+//     res.header("Access-Control-Allow-Origin", "*");
+//     pool.query(`SELECT * from luntan`, function(err, rows, fields) {
+//         if (err) throw err;
+//         let Row=[]
+//         pool.query(`SELECT * from pinglun`, function(err2, rows2, fields) {
+//             if (err) throw err;
+//             Row = rows.map((v,i) => {
+//                 v.arrs=[];
+//                 rows2.map((v2) => {
+//                     v['id'] == v2['uid'] && (
+//                         v.arrs.push(v2)
+//                     )
+//                 })
+//                 return v
+//             })
+//             res.send(Row)
+//         })
+//
+//     });
+// })
 router.get("/",function(req,res){
     res.header("Access-Control-Allow-Origin", "*");
+    var showNum=req.body["showNum"];
     pool.query(`SELECT * from luntan`, function(err, rows, fields) {
         if (err) throw err;
-        let Row=[]
+        let Row=[];
         pool.query(`SELECT * from pinglun`, function(err2, rows2, fields) {
             if (err) throw err;
             Row = rows.map((v,i) => {
@@ -26,17 +48,11 @@ router.get("/",function(req,res){
                     v['id'] == v2['uid'] && (
                         v.arrs.push(v2)
                     )
-
-
                 })
                 return v
             })
-            console.log(Row);
-        })
-        setTimeout(()=>{
             res.send(Row)
-
-        },1000)
+        })
 
 
     });
@@ -55,7 +71,6 @@ router.get("/part",function(req,res){
     res.header("Access-Control-Allow-Origin", "*");
     pool.query(`SELECT * from luntan ORDER BY time DESC limit 2`, function(err, rows, fields) {
         if (err) throw err;
-        console.log(rows)
         res.send(rows)
     });
 })
@@ -81,33 +96,60 @@ router.post('/luntanNum',function(req,res){
 router.post('/addpinglun',function (req,res) {
     res.header("Access-Control-Allow-Origin", "*");  //获取数据时使用
     var id=req.body["id"];
-    var pinglun=req.body["lhxPingLun"];
-    console.log(id,pinglun)
+    var pinglun=req.body["pinglun"];
     // 插入
-    pool.query(`insert into luntan (pinglun) values('${pinglun}') where id=${id}`,function (err,rows,fields) {
+    console.log(id,pinglun);
+
+    pool.query(`INSERT INTO pinglun (pinglun,uid) VALUES("${pinglun}","${id}")`,function (err,rows,fields) {
         if(err) throw err;
-        res.send(rows)
-    })
+        pool.query(`SELECT * from luntan`, function(err, rows, fields) {
+            if (err) throw err;
+            let Row=[]
+            pool.query(`SELECT * from pinglun`, function(err2, rows2, fields) {
+                if (err) throw err;
+                Row = rows.map((v,i) => {
+                    v.arrs=[];
+                    rows2.map((v2) => {
+                        v['id'] == v2['uid'] && (
+                            v.arrs.push(v2)
+                        )
+                    })
+                    console.log(rows2)
+                    return v
+                })
+                // setTimeout(()=>{
+                    res.send(Row)
+
+                // },1000)
+
+
+            })
+
+
+        });
+})
 });
 //添加评论完
 
 
 // 我的心情说说    //有问题
-router.post("/mymood",function(req,res){
-    res.header("Access-Control-Allow-Origin", "*");
-    pool.query(`SELECT * from luntan`, function(err, rows, fields) {
-        if (err) throw err;
-        res.send(rows)
-    });
-})
 // router.post("/mymood",function(req,res){
-//     var name='八戒';
 //     res.header("Access-Control-Allow-Origin", "*");
-//     pool.query(`SELECT * from luntan where name=${name}`, function(err, rows, fields) {
+//     pool.query(`SELECT * from luntan`, function(err, rows, fields) {
 //         if (err) throw err;
 //         res.send(rows)
 //     });
 // })
+
+router.post("/mymood",function(req,res){
+    var name='八戒';
+    res.header("Access-Control-Allow-Origin", "*");
+    pool.query(`SELECT * from luntan where nickName=${name}`, function(err, rows, fields) {
+        if (err) throw err;
+        console.log(rows)
+        res.send(rows)
+    });
+})
 // 我的心情说说完
 
 

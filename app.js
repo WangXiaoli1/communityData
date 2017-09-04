@@ -10,6 +10,7 @@ var users = require('./routes/users');
 // 业主
 var luntan=require('./routes/luntan');
 
+
 //房屋租赁
 var chuzu=require('./routes/chuzu');
 //物业报修
@@ -46,8 +47,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
-// 业主
+// 业主论坛
 app.use('/luntan',luntan);
+
 
 //业主房屋租赁
 app.use('/chuzu',chuzu);
